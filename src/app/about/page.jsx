@@ -10,7 +10,7 @@ import {
   TwitterIcon,
 } from '@/components/SocialIcons'
 import portraitImage from '@/images/portrait.jpg'
-
+{/* eslint-disable react/no-unescaped-entities */}
 function SocialLink({ className, href, children, icon: Icon }) {
   return (
     <li className={clsx(className, 'flex')}>
@@ -101,16 +101,13 @@ export default function About() {
             </p>
             <p>
               🌌 **Ready for New Quests**: But I'm not just a tech maestro – I also have a soft spot for starry skies, DIY experiments, and the sweet thrill of a well-cooked meal. And while I code with passion, I also thrive on collaboration and am always eager to learn new incantations from my fellow wizards of the code realm.
-
               🚀 **Join Me on This Epic Journey**: So, whether you're on a quest for software that astonishes or simply want to discuss the latest tech enchantments, I'm your guide through this digital odyssey. Reach out to me at juanma.prada88@gmail.com, and together, let's script a tale of innovation!
 
               May your bugs be minor and your software always bewitching! 🎩✨
             </p>
             <p>
               🍷 **Sipping Code with a Glass of Red**: When the digital realms grow silent, you'll find me savoring life's finer flavors. Red wine, in particular, holds a special place in my heart. A glass of velvety Carmenere from Argentina or a robust Rioja from Spain? Those are my potions of relaxation, each sip a celebration of the artistry of both technology and taste.
-
               🐾 **Companions on the Quest**: While I'm busy conjuring code and savoring wine, I'm never alone on this grand adventure. Allow me to introduce my trusty sidekicks: Proxy and Maní, two furry wizards who bring boundless joy to my journey. Their boundless energy and unwavering loyalty remind me that life is meant to be lived to the fullest.
-
               So, whether I'm crafting intricate software spells or sharing a hearty laugh with Proxy and Maní, my world is an enchanting blend of the digital and the delightful. Drop me a message at juanma.prada88@gmail.com, and let's chat about tech, wine, or even swap tales of our four-legged companions. Here's to innovation, friendship, and the magic of a life well-lived!
 
               Cheers to codes, wines, and wagging tails! 🍻🍷🐶🐾
