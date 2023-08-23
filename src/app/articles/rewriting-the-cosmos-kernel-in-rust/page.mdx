@@ -1,0 +1,113 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Juan Manuel Prada',
+  date: '2023-08',
+  title: 'Architecting Production-Grade Node.js Applications with Typescript, NestJS, and Decorator Modularity',
+  description:
+    'When creating an application you need to achieve true ' +
+      'flexibility by allowing use of any other libraries, it is important to create versatile software adaptable ecosystem that is a fully-fledged backbone for all kinds of server-side applications and ' +
+      'it is important to enforce design patterns and mature solutions able to scale, which are easy to deploy and maintainable in a timely matter',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+Let's embark on a concise exploration of the technological framework underpinning our article. Our current venture involves the creation of a Node.js application with a strong emphasis on delivering robust production-grade code. To attain this objective, we've opted for Typescript—a choice that bestows our JavaScript code with comprehensive and accurate typing capabilities, thus enhancing code quality.
+
+However, we're not solely relying on the rudiments of pure Node.js development. Instead, we're leveraging the power of NestJS, a robust framework that operates on top of Node.js. NestJS doesn't just offer a mere structural framework, but also delves deep into architectural paradigms. It introduces the concept of modular injection, which plays a pivotal role in our application's architecture.
+
+The distinctive feature of NestJS lies in its intricate utilization of the decorator pattern, a fundamental design principle. The decorator pattern imbues our codebase with a mechanism to augment classes or properties, facilitating the implementation of cross-cutting concerns. This results in cleaner and more modular code, as the decorator pattern allows us to encapsulate functionalities and apply them consistently wherever needed.
+
+To elucidate further, NestJS's modularity empowers developers to craft isolated modules, each encapsulating a specific set of features. This modularity extends to the injection of these modules, providing the developer with unparalleled flexibility. These modules, armed with their unique capabilities, can be effortlessly injected wherever they're required within the application.
+
+In essence, our approach combines the prowess of Typescript's robust typing, NestJS's modular architecture, and the decorator pattern's elegant structural enhancements. This amalgamation equips us with the tools needed to build a scalable, maintainable, and well-structured Node.js application tailored to production-grade standards..
+
+```ts
+import { Module } from '@nestjs/common'
+import { MyController } from './my.controller'
+import { MyService } from './my.service'
+import { FeatureModule } from '../feature/feature.module'
+
+@Module({
+  imports: [FeatureModule]
+  controllers: [MyController],
+  providers: [MyService],
+})
+export class MyModule {}
+```
+This piece above shows a typical Nestjs module injection pattern where according to the documentation it always require four important pieces
+1. An entity definition
+2. A service
+3. A controller
+4. A module
+## Let's put an example together
+
+Lorem markdownum, bracchia in redibam! Terque unda puppi nec, linguae posterior
+in utraque respicere candidus Mimasque formae; quae conantem cervice. Parcite
+variatus, redolentia adeunt. Tyrioque dies, naufraga sua adit partibus celanda
+torquere temptata, erit maneat et ramos, [iam](#) ait dominari
+potitus! Tibi litora matremque fumantia condi radicibus opusque.
+
+Deus feram verumque, fecit, ira tamen, terras per alienae victum. Mutantur
+levitate quas ubi arcum ripas oculos abest. Adest [commissaque
+victae](#) in gemitus nectareis ire diva
+dotibus ora, et findi huic invenit; fatis? Fractaque dare superinposita
+nimiumque simulatoremque sanguine, at voce aestibus diu! Quid veterum hausit tu
+nil utinam paternos ima, commentaque.
+
+```c
+exbibyte_wins = gigahertz(3);
+grayscaleUtilityClient = control_uat;
+pcmciaHibernate = oop_virus_console(text_mountain);
+if (stateWaisFirewire >= -2) {
+    jfs = 647065 / ldapVrml(tutorialRestore, 85);
+    metal_runtime_parse = roomComputingResolution - toolbarUpload +
+            ipx_nvram_open;
+} else {
+    maximizeSidebar *= suffix_url(flatbed + 2, requirements_encoding_node +
+            only_qbe_media, minicomputer);
+}
+```
+
+Aere repetiti cognataque natus. Habebat vela solutis saepe munus nondum adhuc
+oscula nomina pignora corpus deserat.
+
+## Lethaei Pindumve me quae dinumerat Pavor
+
+Idem se saxa fata pollentibus geminos; quos pedibus. Est urnis Herses omnes nec
+divite: et ille illa furit sim verbis Cyllenius.
+
+1. Captus inpleverunt collo
+2. Nec nam placebant
+3. Siquos vulgus
+4. Dictis carissime fugae
+5. A tacitos nulla viginti
+
+Ungues fistula annoso, ille addit linoque motatque uberior verso
+[rubuerunt](#) confine desuetaque. _Sanguine_ anteit
+emerguntque expugnacior est pennas iniqui ecce **haeret** genus: peiora imagine
+fossas Cephisos formosa! Refugitque amata [refelli](#)
+supplex. Summa brevis vetuere tenebas, hostes vetantis, suppressit, arreptum
+regna. Postquam conpescit iuvenis habet corpus, et erratica, perdere, tot mota
+ars talis.
+
+```c
+digital.webcam_dual_frequency = webmasterMms;
+if (5 + language_standalone_google) {
+    cc_inbox_layout *= file_character;
+    task += p;
+    lockUnicode += enterprise_monochrome(tokenFunctionPersonal, keyVirtual,
+            adf);
+}
+windows_binary_esports(87734, array(restoreRomTopology, adRaw(407314),
+        dongleBashThumbnail), interpreter);
+```
+
+Sit volat naturam; motu Cancri. Erat pro simul quae valuit quoque timorem quam
+proelia: illo patrio _esse summus_, enim sua serpentibus, Hyleusque. Est coniuge
+recuso; refert Coroniden ignotos manat, adfectu.
