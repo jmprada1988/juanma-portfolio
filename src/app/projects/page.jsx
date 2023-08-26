@@ -7,41 +7,48 @@ import logoCosmos from '@/images/logos/cosmos.svg'
 import logoHelioStream from '@/images/logos/helio-stream.svg'
 import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
+//real stuff
+import logoHelix from '@/images/logos/helix-genetics.svg'
+import logoTandym from '@/images/logos/tandym-icon.png'
+import logoGorilla from '@/images/logos/gorilla-logic.jpeg'
+import logoDevbase from '@/images/logos/devbase.jpeg'
+import logoUbuntu from '@/images/logos/ubuntu-linux.png'
+import logoFreelance from '@/images/logos/open-shuttle.svg'
 
 const projects = [
   {
-    name: 'Planetaria',
+    name: 'Tandym',
     description:
-      'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-    logo: logoPlanetaria,
+      'Offer your own branded payment method that saves you on processing costs while driving loyalty with your best customers.',
+    link: { href: 'https://bytandym.com', label: 'Tandym Payments' },
+    logo: logoTandym,
   },
   {
-    name: 'Animaginary',
+    name: 'Dev Base',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoAnimaginary,
+      'A nearshore staff augmentation company that connects innovative companies with world-class developers & engineers based in LATAM & Vietnam.',
+    link: { href: 'https://www.devbase.us', label: 'DevBase' },
+    logo: logoDevbase,
   },
   {
-    name: 'HelioStream',
+    name: 'Helix Genetics',
     description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
+      'Developing technologies that help humans to live longer and fulfilling lives.',
+    link: { href: 'https://www.helixgenetics.org', label: 'Helix Genetics' },
+    logo: logoHelix,
   },
   {
-    name: 'cosmOS',
+    name: 'Ubuntu OS',
     description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
+      'The open source Ubuntu desktop operating system powers millions of PCs and laptops around the world.',
+    link: { href: 'https://ubuntu.com/desktop', label: 'Ubuntu, Linux For human beings' },
+    logo: logoUbuntu,
   },
   {
-    name: 'OpenShuttle',
+    name: 'carbnb',
     description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
+      'Like Airbnb but for cars.',
+    link: { href: 'https://github.com/jmprada1988/auth_server', label: 'Car BnB' },
     logo: logoOpenShuttle,
   },
 ]

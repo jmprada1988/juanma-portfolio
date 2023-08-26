@@ -115,7 +115,7 @@ export default function About() {
             </p>
             <p>
               In the realm of professional pursuits,
-              I proudly wear the hat of CEO at Helix Genetics, a company co-founded with my wife to drive forward the frontiers of medical research and software innovation.
+              I proudly wear the hat of Director of Architecture and Engineering at Helix Genetics, a company co-founded with my wife to drive forward the frontiers of medical research and software innovation.
               Under the banner of Helix Genetics, our dedicated team is committed to enhancing human lives through cutting-edge projects that resonate with the heart of healthcare advancement.
               With a strategic focus on creating superior healthcare systems and pioneering models for early-stage cancer detection, we aspire to uplift our community in Colombia and beyond. Our mission isn't just to harness technology but to channel it as a catalyst for positive change, amplifying the impact of medical advancements on the lives of those we serve. As we navigate this intricate tapestry of science and technology, we remain steadfast in our commitment to weaving together a brighter, healthier future for all.
 
