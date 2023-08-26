@@ -139,7 +139,7 @@ function Resume() {
   let resume = [
     {
       company: 'Helix Genetics',
-      title: 'CEO',
+      title: 'Director of Architecture and Engineering',
       logo: logoHelix,
       start: '2020',
       end: {
