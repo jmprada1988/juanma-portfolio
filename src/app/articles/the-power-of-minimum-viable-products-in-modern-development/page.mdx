@@ -1,0 +1,72 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Juan Manuel Prada',
+  date: '2023-09-03',
+  title: 'The Power of Minimum Viable Products (MVPs) in Modern Product Development',
+  description:"Discover how Minimum Viable Products (MVPs) revolutionize product development, enabling rapid innovation and customer-focused success in today's dynamic market."
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+This examination delves into the essence of the Minimum Viable Product (MVP) as a pivotal concept in contemporary product development, notably within the domains of startups and software engineering. The MVP, characterized by its strategic emphasis on delivering indispensable product features while curtailing unnecessary complexities, plays a central role in this discourse.
+
+The central argument revolves around the MVP's role as a swift and efficient product development catalyst. The MVP empowers development teams to engage in hypothesis testing, user feedback collection, and assumption validation by facilitating the expedited introduction of a primary product iteration to the market. This iterative approach imbues the development process with agility and adaptability, conserving valuable resources by avoiding developing extraneous features that may not resonate with the user base. Instead, the MVP lays the groundwork for subsequent enhancements, ensuring that the final product aligns closely with user preferences and market demands.
+
+As the narrative unfolds, it explores the technical facets intrinsic to MVP development, encompassing considerations such as network traffic management, data persistence strategies, and application architecture. Each of these elements significantly influences the MVP's trajectory and ultimate success. Furthermore, this discussion underscores the importance of adhering to established code styles and standards. It emphasizes their role in maintaining codebase consistency, readability, and long-term maintainability while fostering seamless collaboration among developers. The MVP emerges as a strategic imperative in the quest for innovation, user-centricity, and sustainable product triumph.
+A Minimum Viable Product (MVP) is a fundamental concept in product development, particularly in startups and software development. It represents a strategic approach to building and launching a product that focuses on delivering the essential features and functionality needed to address the primary problems or needs of the target audience. The MVP excludes non-essential or extra features to minimize development time and costs.
+
+The primary goal of an MVP is to rapidly bring a basic version of a product to market, allowing the development team to test hypotheses, gather user feedback, and validate assumptions. Doing so makes the development process more agile and responsive to customer needs as the product evolves based on real-world usage and input.
+
+This lean approach to product development can save valuable time and resources, as it prevents the development of elaborate features that may not resonate with users. Instead, an MVP provides a foundation for future enhancements and improvements, ensuring that the final product aligns closely with user preferences and market demands. An MVP is a strategic step toward creating a successful and user-centric product.
+
+At this stage, every decision is crucial when architecting an application because it may lead to either a smooth transition from MVP to a profitable product or force your team to re-write the entire product after failing miserably as the product and the code base grows.
+Let's start defining some of the high-level technical specs we must consider before writing the first line of code. Once we have defined the overall steps, we will go into the specifics of writing code. For the sake of this article and the following series, we are architecting applications that will be delivered as SaaS applications that can be deployed fast at low cost within cloud solutions that allow us to scale as the product grows.
+**Traffic:** Determining the number of network requests, latency accepted, and availability is essential for the cloud infrastructure to handle deployments and data flows. With this knowledge, we can focus effort on building our application using a framework that at least handles more than 30K requests per second, and our cloud infrastructure will handle the rest. When writing this article, nestjs can handle up to 65K requests with Fastify and up to 37K alone. On the other hand, Actix and Drogon can handle more than 550K requests per second, so the decision should be influenced by other aspects, such as resources, developers, and time, before getting married to a framework or programming language.
+
+**Data Persistency:** In this step, you need to evaluate the data that the application will collect and the relationship between data sets, so the choice depends on a project's specific data and scalability requirements. One choice is relational databases,  structured data storage systems that use tables with predefined schemas to store and manage data. They excel in handling structured data with well-defined relationships between entities, providing robust data consistency and support for complex queries. Examples include MySQL, PostgreSQL, and Oracle Database.
+The other choice is Non-relational databases, also known as NoSQL databases, which are more flexible and scalable data storage systems designed to handle unstructured or semi-structured data. They are suitable for scenarios where data doesn't fit neatly into traditional table-based structures, and they prioritize scalability, performance, and flexibility over rigid schemas. Examples include MongoDB, Cassandra, and Redis.
+In summary, relational databases excel in structured data with predefined relationships, while non-relational databases offer flexibility and scalability for unstructured or semi-structured data.
+**Application Architecture:** This step is crucial because it dictates the developers' patterns to follow in building the application. Enforcing persistency patterns, data access patterns, and presentation patterns is crucial. Three-Tier-Architecture is  a software design pattern that divides an application into three interconnected components or layers, each with its specific function:
+
+1. *Presentation Tier (UI):* This is the topmost layer, responsible for handling user interface and user interaction. It often includes user interface elements, such as web pages, mobile apps, or desktop interfaces, that users interact with directly.
+
+2. *Application (or Business Logic) Tier:* This middle layer contains the application's core logic and functionality. It processes user requests from the presentation tier, handles business rules, performs data processing, and communicates with the data tier. The application tier serves as a bridge between the presentation and data tiers.
+
+3. *Data Tier:* The bottom layer, or the data layer or database tier, manages data storage, retrieval, and manipulation. It stores and retrieves data from databases, file systems, or other sources. This layer ensures data integrity and security.
+
+Three-tier architecture promotes modularity, scalability, and maintainability by separating concerns and allowing each layer to evolve independently.
+
+**MVC (Model-View-Controller):**
+MVC is a design pattern commonly used in software development, especially for building web applications. It divides an application into three interconnected components:
+
+1. *Model:* The Model represents the application's data and business logic. It is responsible for data manipulation, validation, and the overall application behavior. Changes in the Model trigger updates to the View.
+
+2. *View:* The View is responsible for displaying data to the user and presenting the user interface. It receives data from the Model and presents it to the user in a readable format. Views can also capture user input and send it to the Controller. The view component is the standard presentation layer in monolithic applications. In APi-driven applications, SPA (Single Page Application) or a Bobile App intrinsically works as the presentational layer
+
+3. *Controller:* The Controller is an intermediary between the Model and the View. It handles user input, processes requests, and interacts with the Model to update data. It ensures that the View reflects the current state of the Model.
+
+MVC promotes separation of concerns, making maintaining and scaling applications easier. It allows developers to work independently on different application aspects, making the code more modular and maintainable.
+Code Styles, Code Standards: Certainly! Code styles and standards are crucial in software development for various reasons, regardless of the programming language or framework.
+
+1. *Consistency:* Code styles and standards ensure that all code within a project follows a consistent structure and formatting. This uniformity makes it easier for developers to understand and work with the codebase, reducing the cognitive load when switching between different project parts.
+
+2. *Readability:* Well-defined code styles prioritize code readability; this is essential for developers who need to review and maintain the code. Readable code is less prone to bugs and easier to troubleshoot.
+
+3. *Maintainability:* A code that adheres to established standards is typically more maintainable. Updating, fixing issues, and adding new features are more accessible when the codebase is clean and well-organized.
+
+4. *Collaboration:* Code styles and standards are crucial for effective collaboration when multiple developers work on a project. It ensures that everyone can understand each other's code, regardless of their coding styles or preferences.
+
+6. *Scalability:* Code standards make it easier to scale a project. As the codebase grows, consistent conventions help maintain order and prevent the codebase from becoming cumbersome.
+
+7. *Onboarding:* When new developers join a project, establishing code styles and standards simplifies onboarding. They can quickly adapt to the project's coding practices and start contributing effectively.
+
+
+9. *Community and Industry Best Practices:* Adhering to widely accepted coding standards aligns your project with industry best practices. It can make collaborating with the open-source community easier and leverage third-party libraries and tools such as Code linters, and static analysis tools can detect issues before they become problematic, improving code quality
+
+In an era where product success is contingent upon swift adaptation and user-centricity, the Minimum Viable Product emerges as a beacon of efficiency and efficacy in product development. Its role as a strategic stepping stone cannot be understated, as it paves the way for creating products that meet user needs and evolve harmoniously with changing market dynamics. As we delve into the technical specifications and architectural considerations accompanying MVP development, it becomes evident that every decision made during this phase carries profound implications for the product's future. Whether regarding network traffic, data persistency, or application architecture, the wisdom of choosing the right path is paramount. Furthermore, adhering to established code styles and standards becomes a guiding principle, ensuring not only the consistency and readability of the code but also its long-term maintainability, scalability, and seamless collaboration among developers. Ultimately, the MVP is more than just a product; it is a strategic approach that empowers innovation, responsiveness, and success in the ever-evolving world of product development.
