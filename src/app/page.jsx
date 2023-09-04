@@ -269,7 +269,7 @@ export default async function Home() {
             Software Architect, founder, and computer scientist.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Juan Manuel, a software engineer and entrepreneur based in Bogotá DC. I’m the founder and CEO of Helix Genetics S.A.S, where we develop
+            I’m Juan Manuel, a software architect who loves to code and entrepreneur based in Bogota DC. I’m the founder and Director of Engineering of Helix Genetics S.A.S, where we develop
             technologies that help humans to live longer and fulfilling lives.
           </p>
           <div className="mt-6 flex gap-6">
