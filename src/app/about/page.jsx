@@ -62,63 +62,40 @@ export default function About() {
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              Ahoy there, fellow digital explorers! I'm Juanma, your friendly neighborhood code conjurer, and I'm here to turn caffeine into beautifully functional software!
-
-              👾 **Unleashing Tech Magic**: Armed with a degree in Computer Science and a passion for bringing digital dreams to life, I've spent more than seven fantastic years as a software engineer.
-              Imagine me as a digital alchemist, transmuting lines of code into captivating applications.
-
-            </p>
-            <p>
-              🚀 **The JavaScript Odyssey**: For over five years,
-              I've been on a wild JavaScript adventure, zigzagging through its realms with the enthusiasm of a kid in a candy store.
-              Whether it's crafting interactive user interfaces or sculpting server-side masterpieces,
-              JavaScript/TypeScript is my trusty wand in this enchanting journey.
-            </p>
-            <p>
-              ⚡ **Architect of the Digital Skies**: With my NodeJS cape and Express Nestjs armor,
-              I've fearlessly ventured into the architecture realm, building and scaling applications that reach for the clouds.
-              Front-end enchantments? I wield the powers of React, Next, Vue.js, and a trove of CSS spells, from SCSS to CSS modules,
-              creating interfaces that are as visually stunning as they are user-friendly.
-            </p>
-
-            <p>
-              📊 **Database Sorcery**: I've dabbled in the arcane arts of databases,
-              from commanding the powerful SQL spirits of MySql and Postgres to forging alliances with the NoSQL guardians like MongoDB, Redis, and DynamoDb.
-              My databases are more organized than a perfectly cataloged library – no magical bookmarks required!
+              Greetings.
+              I'm Juan Manuel, a passionate software engineer with a career spanning over seven years dedicated to the art of crafting innovative and functional software solutions.
+              My journey has been marked by a deep engagement with JavaScript and TypeScript, where I've developed expertise in both front-end frameworks like React and Next.js and back-end technologies, including NodeJS and NestJS.
 
             </p>
             <p>
-              📱 **Mobile Wizardry**: Ever heard of React Native?
-              It's my wand of choice for mobile development! With its spellbinding abilities, adding some swift and java touches for better IOS and Android support
-              I craft mobile experiences that captivate and engage, all while keeping the user experience enchantingly seamless.
+              My approach to software development is holistic, ensuring that every application I build is technically robust and intuitively designed.
+              My technical portfolio includes extensive experience with databases, having worked with SQL systems like MySQL and PostgreSQL, as well as NoSQL databases such as MongoDB, Redis, and DynamoDB.
+              This broad skill set allows me to tackle complex data challenges and implement efficient and scalable solutions.
+            </p>
+            <p>
+              I've developed a strong foundation in mobile development through React Native, enabling me to deliver high-quality applications for iOS and Android devices.
+            </p>
+
+            <p>
+              Cloud computing is another area in which I excel, particularly within the AWS ecosystem.
+              I've successfully architected and optimized cloud infrastructures using essential AWS services like S3, ECS, Glue, and RedShift.
+              My proficiency in containerization technologies like Docker and Kubernetes further enhances my ability to create scalable and portable applications that meet the demands of today's dynamic digital environment.
 
             </p>
             <p>
-              ☁️ **Cloud Chronicles**: Venturing into the digital sky,
-              I've harnessed the cloud with the mighty AWS Stack, From storing gems in S3 to optimization of ECS instances and setting up pipelines pulling to add some magic with amazon Glue just before feeding it to amazon RedShift
-              Docker and Kubernetes? Oh, I've tamed those creatures too, ensuring that my software creations are as portable as they are powerful.
-
+              When I'm not working on software projects, I enjoy exploring new technologies, diving into DIY projects, and appreciating the finer things in life, such as a well-prepared meal or a glass of fine wine.
+              My life is also enriched by the companionship of my two dogs, Proxy and Maní, who add joy and energy to my daily routine.
+              These personal interests humanize me and make me more relatable to potential collaborators.
             </p>
             <p>
-              🌌 **Ready for New Quests**: But I'm not just a tech maestro – I also have a soft spot for starry skies, DIY experiments, and the sweet thrill of a well-cooked meal. And while I code with passion, I also thrive on collaboration and am always eager to learn new incantations from my fellow wizards of the code realm.
-              🚀 **Join Me on This Epic Journey**: So, whether you're on a quest for software that astonishes or simply want to discuss the latest tech enchantments, I'm your guide through this digital odyssey. Reach out to me at juanma.prada88@gmail.com, and together, let's script a tale of innovation!
-
-              May your bugs be minor and your software always bewitching! 🎩✨
+              I am the Director of Architecture and Engineering at Helix Genetics,
+              a company I co-founded with my wife. Our mission at Helix Genetics is to advance medical research and healthcare through cutting-edge software solutions.
+              We are mainly focused on early-stage cancer detection and the development of advanced healthcare systems, aiming to make a meaningful impact in our community in Colombia and beyond.
             </p>
             <p>
-              🍷 **Sipping Code with a Glass of Red**: When the digital realms grow silent, you'll find me savoring life's finer flavors. Red wine, in particular, holds a special place in my heart. A glass of velvety Carmenere from Argentina or a robust Rioja from Spain? Those are my potions of relaxation, each sip a celebration of the artistry of both technology and taste.
-              🐾 **Companions on the Quest**: While I'm busy conjuring code and savoring wine, I'm never alone on this grand adventure. Allow me to introduce my trusty sidekicks: Proxy and Maní, two furry wizards who bring boundless joy to my journey. Their boundless energy and unwavering loyalty remind me that life is meant to be lived to the fullest.
-              So, whether I'm crafting intricate software spells or sharing a hearty laugh with Proxy and Maní, my world is an enchanting blend of the digital and the delightful. Drop me a message at juanma.prada88@gmail.com, and let's chat about tech, wine, or even swap tales of our four-legged companions. Here's to innovation, friendship, and the magic of a life well-lived!
-
-              Cheers to codes, wines, and wagging tails! 🍻🍷🐶🐾
-
-            </p>
-            <p>
-              In the realm of professional pursuits,
-              I proudly wear the hat of Director of Architecture and Engineering at Helix Genetics, a company co-founded with my wife to drive forward the frontiers of medical research and software innovation.
-              Under the banner of Helix Genetics, our dedicated team is committed to enhancing human lives through cutting-edge projects that resonate with the heart of healthcare advancement.
-              With a strategic focus on creating superior healthcare systems and pioneering models for early-stage cancer detection, we aspire to uplift our community in Colombia and beyond. Our mission isn't just to harness technology but to channel it as a catalyst for positive change, amplifying the impact of medical advancements on the lives of those we serve. As we navigate this intricate tapestry of science and technology, we remain steadfast in our commitment to weaving together a brighter, healthier future for all.
-
+              If you're interested in collaborating or discussing innovative ideas,
+              please get in touch with me at juanma.prada88@gmail.com
+              I look forward to connecting and exploring how we can create something impactful together.
             </p>
           </div>
         </div>
