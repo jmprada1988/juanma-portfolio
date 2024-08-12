@@ -1,0 +1,378 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import Image from 'next/image'
+import migrationImg from './sql_migrations.webp'
+import migrations from './migrations.webp'
+
+export const article = {
+  author: 'Juan Manuel Prada',
+  date: '2024-07-20',
+  title: 'Mastering SQL Migrations: Strategies for Safe and Efficient Database Updates',
+  description:
+    'Managing database migrations efficiently is critical to ensure the scalability, extensibility, and maintainability of applications that rely on relational databases. Migrations allow developers to apply consistent schema changes across environments, preventing issues that arise from version discrepancies. Using tools like TypeORM in NestJS, migrations are defined and executed through SQL scripts, with best practices such as batching updates, using transactions, and safely modifying schema elements to maintain database integrity. This systematic approach ensures that applications can evolve without compromising stability or performance.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+When dealing with relational databases, projects must acknowledge and address this crucial reality efficiently. This is the key to maintaining applications’ scalability, extensibility, and maintainability. It underscores the need for developers to thoroughly discuss and plan architectural changes to tackle the migration challenge.
+
+<Image src={migrationImg} alt="Image of a Database" />
+
+When working with any relational database, there is only one way to make data changes: run a migration.
+
+For those who are not familiar with the term migration, active records define it as a mechanism to manage the evolution of a schema used by several physical databases, a solution to the common problem of adding a field to make a new feature work in your local database but being unsure of how to push that change to other developers and to the production server. With migrations, you can describe the transformations in self-contained classes that can be checked into version control systems and executed against another database that might be one, two, or five versions behind” (Ruby on Rails, n.d.)
+
+Working with new resources, I would consider is one with the least cascading effects since there is
+no need to conciliate records as often as it is required when extending existing functionality.
+To accomplish this, the developer may create the new resource by following these steps, which
+I will provide using examples within a nestjs project.
+
+By convention in software development, a migration has at least two SQL scripts or methods when defined within a class.
+ The up method contains the SQL commands to perform the desired changes within the database e.g., ALTER TABLE_NAME ADD FK_001,
+ while the down method implements the required steps to undo the up migration e.g., ALTER TABLE_NAME DROP FK_001.
+## The straightforward parts.
+
+### 1. Define the entity.
+```ts
+// User entity
+// Using Prisma we may define the entity in the schema.prisma file as
+
+model User {
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  phone_number String
+  username     String     @unique()
+  password     String
+  is_active    Boolean    @default(true)
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @default(now())
+}
+
+// This which would be the equivalent in Typeorm to
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string
+  @ApiProperty({ type: 'string' })
+  @IsNumberString()
+  @Column({ type: 'varchar', nullable: false })
+  phone_number: string
+  @ApiProperty({ type: 'string' })
+  @IsString()
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  username: string
+  @ApiProperty({ type: 'string' })
+  @IsString()
+  @Column({ type: 'varchar', nullable: false })
+  password: string
+  @ApiProperty({ type: 'boolean' })
+  @IsBoolean()
+  @Column({ default: false })
+  is_active: boolean
+  @CreateDateColumn({ type: 'datetime' })
+  created_at: Date
+  @UpdateDateColumn({ type: 'datetime' })
+  updated_at: Date
+}
+```
+In the typeorm example I am adding the dto schema validations using the class-validator to avoid code duplication defining a dto when the intent is validating as a resource.
+In Prisma, it is recommended to define an entity, which I am omitting to avoid extending this post with repeated examples.
+
+### 2. Understand the migration file.
+At this point, we have the data model definition which is usually useful to develop the api layers on top of this model before persisting new changes to the database, and depending on the framework or technology the project implements using this model we can use a CLI to generate the migration file.
+
+In prisma, we could create the script by running
+```bash
+    npx prisma migrate dev - create-only -n AddsUserTable
+```
+which would be the equivalent intypeorm to
+```bash
+    typeorm migration:create ./path-to-migrations-dir/AddsUserTable
+```
+
+This will generate a file with the pattern timestamp-AddsUserTable.ts
+which contains a class with a generated SQL script.
+```ts
+import { MigrationInterface, QueryRunner } from 'typeorm'
+
+export class AddsUserTable1633427228144 implements MigrationInterface {
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`
+            CREATE TABLE user (
+                id char(36) NOT NULL,
+                phone_number varchar(255) NOT NULL,
+                username varchar(255) NOT NULL,
+                password text NULL,
+                is_active tinyint NOT NULL DEFAULT 0
+                created_at datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+                updated_at datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+                PRIMARY KEY (id)
+            ) ENGINE=InnoDB`)
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`DROP TABLE  \`user\``)
+    }
+}
+```
+I always recommend making sense of the generated file for two reasons:
+- it will help you improve your writing of pure SQL
+- it will allow you to see how the migration aligns with the intended changes within the business model, of course if the generated script is doing what you want to do, then go ahead and apply the change to the database.
+
+```bash
+    // typeorm
+    typeorm migration:run
+    // prisma
+    npx prisma migrate dev
+```
+While developing, it is normal to have to recreate the resource multiple times before shipping the code,
+so for creating new resources, a safeguard that we can add to the script is safe checking the creation of the table and safe dropping the table we would have to replace the following:
+
+```ts
+public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`
+            CREATE TABLE IF NOT EXISTS user (
+                // table definition
+            ) ENGINE=InnoDB`)
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`DROP TABLE IF EXISTS  `user`)
+    }
+```
+
+
+This will allow you to run the up and down migration even after failing to
+ mark the migration as applied, we can verify this by inspecting the migrations table.
+
+<Image src={migrations} alt="Image of a SQL Editor running a query" />
+
+## The not so straightforward parts.
+
+*Handling Updates on Large Amount of Records*
+
+When performing data migrations that involve updating a large number of records,
+it’s crucial to handle the process efficiently to avoid performance bottlenecks and ensure data integrity.
+Here’s a recommended approach for handling such updates in batches, which can be adapted to various scenarios.
+The following example demonstrates the best practices for this process.
+### *Best Practices for Batch Updates*
+    1. **Batch Size:** Define an appropriate batch size that balances performance and load on the database. Too large batches may lead to locking issues, while too small batches may result in an increased number of queries.
+    2. **Track Progress:** Keep track of the progress by storing the ID of the last processed record. This helps in resuming the process in case of failure.
+    3. **Incremental Updates:** Process records incrementally to manage large data sets effectively without overwhelming the system.
+    4. **Logging:** Log the number of updates made per batch and the total updates to monitor the migration progress.
+
+This a possible implementation to handle hundred of thousands of updates
+```ts
+public async up(queryRunner: QueryRunner): Promise<void> {
+  let lastId = '0'; // Assuming IDs are strings; adjust the initial value accordingly
+  const batchCount = 500; // Size of each batch
+
+  let totalUpdatesMade = 0;
+  let batchUpdatesMade = 0;
+
+  do {
+    // Get the maximum id for the current batch
+    const ids = await queryRunner.query(
+      `SELECT id FROM source_table
+       WHERE id > ?
+       ORDER BY id
+       LIMIT ?`,
+      [lastId, batchCount]
+    );
+
+    if (ids.length) {
+      lastId = ids[ids.length - 1].id; // Prepare the last_id for the next iteration
+
+      // Convert ids array to a simple array of id values
+      const idsToUpdate = ids.map((row) => row.id);
+
+      // Perform the update
+      await queryRunner.query(
+        `UPDATE target_table
+         SET target_column = source_value
+         WHERE id IN (?)`,
+        [idsToUpdate]
+      );
+
+      batchUpdatesMade = ids.length; // Set the number of updates made
+      console.log('Updates made in batch:', batchUpdatesMade);
+      totalUpdatesMade += batchUpdatesMade; // Increment total updates made
+    } else {
+      batchUpdatesMade = 0; // No more updates needed
+    }
+  } while (batchUpdatesMade > 0);
+
+  console.log('Total updates made:', totalUpdatesMade);
+}
+```
+## Key Takeaways
+
+**Efficiency:** By updating records in batches, the load on the database is controlled, and the migration process can handle large data sets without overwhelming the system.
+
+**Resilience:** Tracking the last processed ID ensures that the process can be resumed from where it left off in case of an interruption.
+
+**Monitoring:** Logging updates provides visibility into the migration progress, helping to identify and address any issues promptly.
+
+## Running a Migration within a Transaction
+
+Transactions are essential in database operations to ensure data integrity and consistency.
+A transaction is a sequence of operations performed as a single logical unit of work,
+which is either fully completed or fully failed. This ensures that all operations within the transaction are successfully executed before committing the changes to the database,
+or none of them are applied if any operation fails, thus preventing partial updates (Silberschatz et al., 2020).
+
+**What is a Transaction?**
+
+According to Silberschatz et al. (2020), a transaction is “a collection of operations that performs a single logical function in a database application”.
+Transactions provide the properties of atomicity, consistency, isolation, and durability (ACID), which are crucial for reliable database management.
+
+**Implementing Transactions in TypeORM**
+
+When performing migrations, it is a best practice to use transactions to ensure that updates are only committed if all checks and verifications are successful.
+Here’s how you can implement a migration within a transaction in TypeORM:
+```ts
+    import { QueryRunner, MigrationInterface } from "typeorm";
+
+    export class ExampleMigration1620281942000 implements MigrationInterface {
+      public async up(queryRunner: QueryRunner): Promise<void> {
+        // Start a transaction
+        await queryRunner.startTransaction();
+
+        try {
+          // Perform the update
+          await queryRunner.query(
+            `UPDATE target_table
+             SET target_column = new_value
+             WHERE some_condition = true`
+          );
+
+          // Verification step
+          const result = await queryRunner.query(
+            `SELECT COUNT(*) as count FROM target_table
+             WHERE target_column = new_value AND some_condition = true`
+          );
+
+          // Check if the verification is successful
+          if (result[0].count === expected_count) {
+            // Commit the transaction if verification passes
+            await queryRunner.commitTransaction();
+            console.log('Transaction committed successfully.');
+          } else {
+            // Rollback the transaction if verification fails
+            await queryRunner.rollbackTransaction();
+            console.log('Transaction rolled back due to verification failure.');
+          }
+        } catch (error) {
+          // Rollback the transaction in case of error
+          await queryRunner.rollbackTransaction();
+          console.error('Transaction rolled back due to error:', error);
+        } finally {
+          // Release the query runner
+          await queryRunner.release();
+        }
+      }
+
+      public async down(queryRunner: QueryRunner): Promise<void> {
+        // Define rollback logic here if necessary
+      }
+    }
+```
+## Key Takeaways
+
+**Atomicity:** Ensures that all updates are applied only if the entire sequence is successful.
+
+**Consistency:** Verifies that the database remains in a valid state before and after the transaction.
+
+**Isolation:** Maintains that operations within a transaction are isolated from other operations.
+
+**Durability:** Guarantees that once a transaction is committed, it remains committed even in case of a system failure.
+
+## Safely Adding Columns, Indexes, and Foreign Keys
+
+When modifying database schemas, it’s essential to ensure that changes such as adding columns, indexes,
+and foreign keys do not disrupt the existing database structure or cause errors due to already existing elements.
+Here’s a structured approach to safely performing these modifications by checking the existence of columns, indexes, and foreign keys before making changes.
+
+### *Best Practices for Schema Modifications*
+
+**Check for Existing Columns:** Before adding a new column, verify whether it already exists.
+This prevents errors from attempting to add a column that is already present.
+
+### *Check for Existing Indexes and Foreign Keys:* Similar to columns, check for existing indexes and foreign keys before creating new ones to avoid conflicts and errors.
+
+### *Use Generic Examples:* The following example demonstrates the approach using generic table and column names, ensuring clarity and adaptability.
+
+**Typeorm example:**
+
+```ts
+    import { MigrationInterface, QueryRunner } from 'typeorm';
+
+    export class ModifyGenericTable1612592821628 implements MigrationInterface {
+      name = 'ModifyGenericTable1612592821628';
+
+      public async up(queryRunner: QueryRunner): Promise<void> {
+        // Check and add columns
+        if (!(await queryRunner.hasColumn('generic_table', 'new_column1'))) {
+          await queryRunner.query(`ALTER TABLE \`generic_table\` ADD \`new_column1\` varchar(255) NULL`);
+        }
+        if (!(await queryRunner.hasColumn('generic_table', 'new_column2'))) {
+          await queryRunner.query(`ALTER TABLE \`generic_table\` ADD \`new_column2\` varchar(255) NULL`);
+        }
+
+        // Define index keys
+        const foreignKey1 = 'FK_generic1';
+        const foreignKey2 = 'FK_generic2';
+
+        // Check for existing foreign keys
+        const foreignKey1Exists = await queryRunner.query(
+          `SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+           WHERE TABLE_NAME = 'generic_table' AND CONSTRAINT_TYPE = 'FOREIGN KEY' AND CONSTRAINT_NAME = '${foreignKey1}'`
+        );
+        const foreignKey2Exists = await queryRunner.query(
+          `SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+           WHERE TABLE_NAME = 'generic_table' AND CONSTRAINT_TYPE = 'FOREIGN KEY' AND CONSTRAINT_NAME = '${foreignKey2}'`
+        );
+
+        // Drop existing foreign keys if they exist
+        if (foreignKey1Exists.length) {
+          await queryRunner.query(`ALTER TABLE \`generic_table\` DROP FOREIGN KEY \`${foreignKey1}\``);
+        }
+        if (foreignKey2Exists.length) {
+          await queryRunner.query(`ALTER TABLE \`generic_table\` DROP FOREIGN KEY \`${foreignKey2}\``);
+        }
+
+        // Add new foreign keys
+        await queryRunner.query(
+          `ALTER TABLE \`generic_table\` ADD CONSTRAINT \`${foreignKey1}\`
+           FOREIGN KEY (\`new_column1\`) REFERENCES \`related_table1\`(\`related_column1\`)
+           ON DELETE CASCADE ON UPDATE NO ACTION`
+        );
+        await queryRunner.query(
+          `ALTER TABLE \`generic_table\` ADD CONSTRAINT \`${foreignKey2}\`
+           FOREIGN KEY (\`new_column2\`) REFERENCES \`related_table2\`(\`related_column2\`)
+           ON DELETE CASCADE ON UPDATE NO ACTION`
+        );
+      }
+
+      public async down(queryRunner: QueryRunner): Promise<void> {
+          // down implementation, it should have the same checks
+        }
+    }
+```
+
+This approach not only helps in maintaining the database schema without errors but also ensures that the modifications are performed in a controlled and predictable manner, minimizing the risk of disrupting the database operations.
+### Key Takeaways
+
+**Preemptive Checks:** Ensure the column or index does not already exist before attempting to add it, avoiding redundant operations and potential errors.
+
+**Safety and Rollbacks:** The use of down methods provides a way to revert changes, maintaining database integrity.
+
+**Foreign Key Management:** Properly handle foreign keys by checking their existence and safely dropping them before adding new ones.
+
+## References
+
+Ruby on Rails. (n.d.). ActiveRecord::Migration. https://api.rubyonrails.org/classes/ActiveRecord/Migration.html
+
+Silberschatz, A., Korth, H. F., & Sudarshan, S. (2020). Database System Concepts (7th ed.). McGraw-Hill Education.
