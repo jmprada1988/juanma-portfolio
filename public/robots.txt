@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://juanmanuelprada.com.com
+
+# Sitemaps
+Sitemap: https://juanmanuelprada.com.com/sitemap.xml
