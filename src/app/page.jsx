@@ -152,10 +152,7 @@ function Resume() {
       title: 'Lead of Engineering',
       logo: tandymIcon,
       start: '2021',
-      end: {
-        label: 'Present',
-        dateTime: new Date().getFullYear(),
-      },
+      end: '2024'
     },
     {
       company: 'DevBase',
@@ -223,10 +220,16 @@ function Resume() {
           </li>
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
+      <Button
+          href="https://juanma-static-files.s3.us-east-1.amazonaws.com/Resume_juanma_2024.pdf"
+          variant="secondary"
+          className="group mt-6 w-full"
+          download="Your_CV.pdf"
+      >
         Download CV
         <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
+
     </div>
   )
 }

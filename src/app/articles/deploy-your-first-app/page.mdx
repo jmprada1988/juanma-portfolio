@@ -1,0 +1,171 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+    author: 'Juan Manuel Prada',
+    date: '2025-03-18',
+    title: 'Deploy Your First Web App: From Idea to Live Site',
+    description:
+        'A step-by-step guide to deploying a web app from an idea to a live product using AWS Amplify, GitHub, and pre-built templates.',
+}
+
+export const metadata = {
+    title: article.title,
+    description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+# Deploy Your First Web App: From Idea to Live Site
+
+Many developers enjoy writing code to build things, but when it comes to deploying an app, things can get complicated quickly. Whether you have an innovative communication device that will change the world or just want to help your Granny sell her delicious cake recipes, this guide will take you through the fastest steps to turn your idea into a product.
+
+## Step 1: Buy a Domain
+
+A unique domain name makes your site more professional. You can buy a domain for a few bucks at [Namecheap](https://www.namecheap.com), but if you plan to use AWS for hosting, buying it through **AWS Route 53** simplifies the automatic configuration with **S3 and Amplify**.
+
+### Buying a Domain via AWS Route 53
+1. **Log in to AWS** and go to the **Route 53** service.
+2. Click **"Register domain"** and enter your desired domain name.
+3. Choose a domain extension (e.g., `.com`, `.net`).
+4. Complete the purchase and AWS will automatically set up DNS settings.
+5. You can later manage DNS records under **Hosted Zones**.
+
+![Route 53 registration process](https://juanma-static-files.s3.us-east-1.amazonaws.com/blog/deploy-your-first-app/route-53-domain.png)
+
+---
+
+## Step 2: Design Your Website
+
+Now that you have a domain, you need to build the actual website. You have two main options:
+
+### Option 1: Use a CMS (Shopify, Magento, WooCommerce)
+If you plan to sell products, CMS platforms like [Shopify](https://www.shopify.com), [Magento](https://magento.com), or [WooCommerce](https://woocommerce.com) provide templates and built-in e-commerce features. However, they come with **fees**, and moving away from them later can be difficult due to vendor lock-in.
+
+### Option 2: Use a Pre-built Template
+If you want more flexibility, start with a pre-built template from [Envato Elements](https://elements.envato.com). These templates support **React, Next.js, JavaScript, or TypeScript**.
+
+#### Example: Using a Next.js Template
+1. **Download a Next.js template** from Envato Elements.
+2. **Install dependencies** using Node.js:
+```bash
+npm install  # or yarn install
+   ```
+3. **Run the development server** to preview your site:
+```bash
+npm run dev  # or yarn dev
+   ```
+4. **Customize the design** using **Tailwind CSS** and **Hero Components** from [Tailwind UI](https://tailwindui.com).
+5. **Optimize for performance** by removing unnecessary code and assets.
+
+![Envato template in use](https://juanma-static-files.s3.us-east-1.amazonaws.com/blog/deploy-your-first-app/envato-market.png)
+
+---
+
+## Step 3: Push Your Code to GitHub
+Before deployment, your code should be on GitHub so AWS Amplify can access it.
+
+### Setting Up GitHub Repository
+1. **Install Git** (if not installed):
+```bash
+sudo apt install git  # Linux
+brew install git      # macOS
+   ```
+2. **Initialize Git** in your project directory:
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+   ```
+3. **Create a new repository on GitHub**:
+- Go to [GitHub](https://github.com) and create a new repository.
+- Copy the repository URL and run:
+```bash
+git remote add origin https://github.com/yourusername/yourrepo.git
+git push -u origin main
+     ```
+
+![GitHub repository setup](https://juanma-static-files.s3.us-east-1.amazonaws.com/blog/deploy-your-first-app/github-create-repo.png)
+
+---
+
+## Step 4: Deploy with AWS Amplify
+Now that your code is on GitHub, it's time to deploy.
+
+### Steps to Deploy via AWS Amplify
+1. **Log in to AWS** and go to the **Amplify** service.
+2. Click **"Create App"**.
+3. **Connect your GitHub repository**:
+- Authorize AWS Amplify to access your GitHub account.
+- Select your repository and branch.
+4. **Configure Build Settings**:
+- If using Next.js, modify `amplify.yml` to ensure proper build settings:
+```yaml
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+     ```
+5. **Click "Save and Deploy"**.
+6. **Add a Custom Domain**:
+- If using Route 53, click **"Add Custom Domain"** and select your purchased domain.
+- AWS will automatically configure DNS settings.
+
+![AWS Amplify deployment setup](https://juanma-static-files.s3.us-east-1.amazonaws.com/blog/deploy-your-first-app/amplify-create-app.png)
+
+---
+
+## Step 5: Optimize and Go Live 🚀
+Now that your website is deployed, here are some final optimizations:
+
+### Improve Performance
+- Use **image optimization** with Next.js:
+```jsx
+import Image from 'next/image';
+
+<Image src="/images/banner.jpg" alt="Banner" width={800} height={400} quality={90} />
+  ```
+- Enable **lazy loading** for images and components.
+- Use **CloudFront** to cache static assets.
+
+### Secure Your Website
+- Enable **HTTPS** (done automatically by AWS Amplify).
+- Use **Content Security Policy (CSP)** headers to prevent XSS attacks.
+```js
+const cspHeader = "default-src 'self'; script-src 'self' 'unsafe-inline'";
+res.setHeader('Content-Security-Policy', cspHeader);
+  ```
+
+### Monitor User Behavior
+- Add **Google Analytics**:
+```html
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-XXXXX');
+</script>
+  ```
+- Use **Hotjar** for heatmaps and session recording.
+
+---
+
+## What’s Next?
+Now that your app is live, you can add more features:
+
+### 🚀 Enhance Your App with These Features:
+✅ **Enable Payments** using Stripe or PayPal.
+✅ **Improve SEO** with metadata and structured data.
+✅ **Add Authentication** via Google, Auth0, or Firebase.
+✅ **Set Up Analytics** with Google Analytics and Hotjar.
+
+Stay tuned for upcoming guides on these topics! 🎯
